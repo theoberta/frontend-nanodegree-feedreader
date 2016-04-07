@@ -55,7 +55,7 @@ $(function() {
     /* TODO: Write a new test suite named "The menu" */
     describe('the menu', function() {
 
-    
+
 
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
@@ -79,21 +79,60 @@ $(function() {
             expect(document.body.className).toBe('menu-hidden');
         });
 
-    });          
+    });
 
     /* TODO: Write a new test suite named "Initial Entries" */
+    describe('Initial Entries', function() {
 
-        /* TODO: Write a test that ensures when the loadFeed
+         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
+         var entries;
+         beforeEach(function(done) {
+            loadFeed(0, function() {
+                entries = document.getElementsByClassName('entry');
+                done();
+            });
+         });
 
-    /* TODO: Write a new test suite named "New Feed Selection"
+          it('has entry', function(done) {
+            expect(entries.length).not.toBe(0);
+            done();
+          });
+    });
+
+    /* TODO: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function() {
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+
+         var entries;
+         var entries2;
+         beforeEach(function(done) {
+            loadFeed(0, function() {
+                entries = document.getElementsByClassName('entry')[0].innerText;
+                done();
+            });
+
+         });
+
+
+         it('changes content', function(done) {
+            loadFeed(1, function() {
+                entries2 = document.getElementsByClassName('entry');
+                console.log(entries);
+                console.log(entries2[0].innerText);
+                expect(entries).not.toEqual(entries2[0].innerText);
+                done();
+            });
+
+         });
+    });
+
 }());
